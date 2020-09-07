@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+import { MyEditor } from 'components/Post';
 
 
 class Write extends Component {
     render () {
         return (
-            <div> Write </div>
+            <div>
+                Write
+                <MyEditor />
+            </div>
         );
     }
 }
