@@ -25,9 +25,10 @@ class List extends Component {
 
     render (){
         return (
-            <PostContentTitle title="글 목록">
+            <div>
+                <PostContentTitle title="글 목록" />
                 <PostContent title="text" content="text" />
-            </PostContentTitle>
+            </div>
         )
     }
 }

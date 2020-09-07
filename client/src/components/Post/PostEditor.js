@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import {Editor, EditorState} from 'draft-js';
 
-class MyEditor extends Component {
+const styles = {
+    editor: {
+        width: '1000px',
+        border: '1px solid gray',
+        minHeight: '8em'
+    }
+};
+
+
+class PostEditor extends Component {
     constructor(props) {
         super(props);
         this.state = {editorState: EditorState.createEmpty()};
@@ -34,12 +43,5 @@ class MyEditor extends Component {
     }
 }
 
-const styles = {
-    editor: {
-        width: '1000px',
-        border: '1px solid gray',
-        minHeight: '8em'
-    }
-};
 
-export default MyEditor;
+export default PostEditor;

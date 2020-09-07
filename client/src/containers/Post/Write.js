@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MyEditor, Button, InputWithLabel, LinkButton } from 'components/Post';
+import { PostEditor, Button, InputWithLabel, LinkButton } from 'components/Post';
 
 
 class Write extends Component {
@@ -8,7 +8,7 @@ class Write extends Component {
             <div>
                 글 쓰기
                 <InputWithLabel label="제목" />
-                <MyEditor />
+                <PostEditor />
                 <div>
                     <Button onClick={null}>
                         글 작성
