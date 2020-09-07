@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import oc from 'open-color';
-import { WriteButton } from 'components/Post'
+import { LinkButton } from 'components/Post'
 
 
 const Title = styled.div`
@@ -17,7 +17,7 @@ class PostContentTitle extends Component {
         return (
             <div>
                 <Title>{this.props.title}</Title>
-                <WriteButton/>
+                <LinkButton to="/post/write">글 쓰기</LinkButton>
                 {this.props.children}
             </div>
         )

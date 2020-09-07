@@ -36,8 +36,9 @@ class MyEditor extends Component {
 
 const styles = {
     editor: {
+        width: '1000px',
         border: '1px solid gray',
-        minHeight: '6em'
+        minHeight: '8em'
     }
 };
 

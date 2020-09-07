@@ -24,8 +24,8 @@ const BorderedButton = styled(Link)`
 class WriteButton extends Component {
     render() {
         return (
-            <BorderedButton to="/post/write">
-                새 글 작성
+            <BorderedButton to={this.props.to}>
+                {this.props.children}
             </BorderedButton>
         );
     }
