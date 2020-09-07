@@ -10,13 +10,24 @@ const Title = styled.div`
     margin-bottom: 1rem;
 `;
 
+const Content = styled.div`
+    font-size = 1.2rem;
+    font-weight: 300;
+    color: #000;
+    margin-bottom: 1rem;    
+`;
+
 class PostContent extends Component {
     
     render() {
-        console.log(this.props.title)
         return (
             <div>
-                <Title>{this.props.title}</Title>
+                <Title>
+                    {this.props.title}
+                </Title>
+                <Content>
+                    {this.props.content}
+                </Content>
             </div>
         )
     }
