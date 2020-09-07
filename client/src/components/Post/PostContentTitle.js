@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import oc from 'open-color';
+import { WriteButton } from 'components/Post'
 
 
 const Title = styled.div`
@@ -16,6 +17,7 @@ class PostContentTitle extends Component {
         return (
             <div>
                 <Title>{this.props.title}</Title>
+                <WriteButton/>
                 {this.props.children}
             </div>
         )
