@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import { Home } from 'pages'
+import { Post } from 'pages'
 
 
 class App extends Component {
     render() {
         return (
             <div>
-                <Route exact path="/post" Component={ Home }/>
+                <Route path="/post" component={Post}/>
             </div>
         )
     }

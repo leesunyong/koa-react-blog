@@ -11,15 +11,12 @@ const Title = styled.div`
 `;
 
 class PostContent extends Component {
-    constructor(title) {
-        super(title);
-        this.title=title;
-    }
     
     render() {
+        console.log(this.props.title)
         return (
             <div>
-                <Title>{this.title}</Title>
+                <Title>{this.props.title}</Title>
             </div>
         )
     }

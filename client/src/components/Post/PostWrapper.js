@@ -13,7 +13,6 @@ class PostWrapper extends Component {
     render () {
         return (
             <Positioner>
-                HI
                 {this.props.children}
             </Positioner>
         )

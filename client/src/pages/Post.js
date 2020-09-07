@@ -4,13 +4,11 @@ import { Route } from 'react-router-dom';
 import { List, Write } from 'containers/Post';
 
 
-class Home extends Component {
+class Post extends Component {
 
     render () {
-        console.log("WTF")
         return (
             <PostWrapper>
-                Hi
                 <Route path="/post/list" component={List} />
                 <Route path="/post/write" component={Write} />
             </PostWrapper>
@@ -18,4 +16,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default Post;
