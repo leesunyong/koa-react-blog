@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-    margin-top: 1rem;
+    margin: 1rem;
     padding: 0.5rem;
     padding-bottom: 0.4rem;
     
@@ -17,6 +17,8 @@ const Wrapper = styled.div`
     
     cursor:pointer;
     transition: .2s all;
+
+    display: inline-block;
 
     $:active {
         transform: translateY(3px);

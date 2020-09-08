@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { PageTitle, PostEditor, Button, InputWithLabel, LinkButton } from 'components/Post';
 import { getPost, writePost } from 'lib/api/post'
+import styled from 'styled-components';
+
+const BottomWrapper = styled.div`
+    
+`;
 
 
 class Update extends Component {
@@ -72,14 +77,14 @@ class Update extends Component {
                     onChange={this.handleTitleChange}
                 />
                 <PostEditor onChange={this.handleContentChange} content={this.state.content}/>
-                <div>
+                <BottomWrapper>
                     <Button onClick={this.writeHandle}>
                         수정
                     </Button>
                     <LinkButton to="/post/list">
                         취소
                     </LinkButton>
-                </div>
+                </BottomWrapper>
             </div>
         );
     }

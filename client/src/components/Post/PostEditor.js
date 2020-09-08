@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Editor, EditorState, ContentState, convertToRaw} from 'draft-js';
+import {Editor, EditorState, convertToRaw} from 'draft-js';
 
 const styles = {
     editor: {
@@ -13,7 +13,6 @@ const styles = {
 class PostEditor extends Component {
     constructor(props) {
         super(props);
-        
         this.state = {editorState: EditorState.createEmpty()};
         
 
@@ -37,12 +36,12 @@ class PostEditor extends Component {
         const value = blocks
             .map(block => (!block.text.trim() && '\n') || block.text)
             .join('\n');
+        console.log(value);
+        this.props.onChange(value);
     }
 
     componentDidMount() {
-        this.setState({editorState:EditorState.createWithContent(ContentState.createFromText(this.props.content))});
         this.focusEditor();
-        console.log(this.props.content);
     }
 
     render() {

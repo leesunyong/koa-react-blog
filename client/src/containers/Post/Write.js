@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { PageTitle, PostEditor, Button, InputWithLabel, LinkButton } from 'components/Post';
 import { writePost } from 'lib/api/post'
+import styled from 'styled-components';
 
+const BottomButtonWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+`;
 
 class Write extends Component {
 
@@ -52,14 +57,14 @@ class Write extends Component {
                     onChange={this.handleTitleChange}
                 />
                 <PostEditor onChange={this.handleContentChange}/>
-                <div>
+                <BottomButtonWrapper>
                     <Button onClick={this.writeHandle}>
                         저장
                     </Button>
                     <LinkButton to="/post/list">
                         취소
                     </LinkButton>
-                </div>
+                </BottomButtonWrapper>
             </div>
         );
     }

@@ -7,6 +7,7 @@ import { deletePost } from 'lib/api/post'
 const Wrapper = styled.div`
     width: 1000px;
     margin-top: 100px;
+    padding: 20px 20px 0 20px;
     border: 1px solid #000
 `;
 
@@ -28,7 +29,11 @@ const Content = styled.div`
     color: #000;
     margin-bottom: 1rem;   
     min-height: 3rem;
-    padding: 10px 
+`;
+
+const BottomButtonWrapper = styled.div`
+    display: flex;
+    justify-content: center;
 `;
 
 class PostContent extends Component {
@@ -58,12 +63,14 @@ class PostContent extends Component {
                 <Content>
                     {this.props.content}
                 </Content>
-                <LinkButton to={"/post/update?" + this.props.id}>
-                    수정
-                </LinkButton>
-                <Button onClick={this.handleDelete} to="/post/list">
-                    삭제
-                </Button>
+                <BottomButtonWrapper>
+                    <LinkButton to={"/post/update?" + this.props.id}>
+                        수정
+                    </LinkButton>
+                    <Button onClick={this.handleDelete} to="/post/list">
+                        삭제
+                    </Button>
+                </BottomButtonWrapper>
             </Wrapper>
         )
     }
