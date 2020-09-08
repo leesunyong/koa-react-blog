@@ -32,8 +32,8 @@ class List extends Component {
             <div>
                 <PostContentTitle title="글 목록" />
                 <PostContent
-                    title={this.state.list[0].title}
-                    content={this.state.list[0].content}
+                    title="title"
+                    content="content"
                 />
             </div>
         )

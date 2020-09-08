@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { PostEditor, Button, InputWithLabel, LinkButton } from 'components/Post';
+import { writePost } from 'lib/api/post'
 
 
 class Write extends Component {
@@ -13,9 +14,18 @@ class Write extends Component {
     }
 
     writeHandle = async () => {
-        const { title } = this.state.form;
+        const { history } = this.props;
 
-        console.log( title );
+        try {
+            const { title, content } = this.state;
+            const writer = {username: "admin"};
+    
+            const result = await writePost({writer, title, content});
+
+            history.push('/post/list');
+        } catch (e) {
+            console.log("알 수 없는 에러가 발생했습니다.");
+        }
     }
 
     handleTitleChange (event) {
@@ -23,7 +33,7 @@ class Write extends Component {
     }
 
     handleContentChange (text) {
-        this.setState( { content : text });
+        this.setState({ content : text });
     }
 
 
