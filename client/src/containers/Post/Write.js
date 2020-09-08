@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PostEditor, Button, InputWithLabel, LinkButton } from 'components/Post';
+import { PageTitle, PostEditor, Button, InputWithLabel, LinkButton } from 'components/Post';
 import { writePost } from 'lib/api/post'
 
 
@@ -41,7 +41,11 @@ class Write extends Component {
 
         return (
             <div>
-                글 쓰기
+                <PageTitle
+                    title="글 쓰기"
+                    to="/post/list"
+                    button="글 목록"
+                />
                 <InputWithLabel
                     label="제목"
                     name="title"

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PostContentTitle, PostContent } from 'components/Post';
+import { PageTitle, PostContent } from 'components/Post';
 import { postList } from 'lib/api/post'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
@@ -33,14 +33,13 @@ class List extends Component {
     render (){
         return (
             <div>
-                <PostContentTitle title="글 목록" />
-                <PostContent
-                    title="title"
-                    content="content"
+                <PageTitle
+                    title="글 목록"
+                    to="/post/write"
+                    button="글 쓰기"
                 />
-
                 {this.state.list.map((value, index) => {
-                    return <PostContent title={value.title} content={value.content}/>
+                    return <PostContent key={index} title={value.title} content={value.content}/>
                 })}
             </div>
         )
