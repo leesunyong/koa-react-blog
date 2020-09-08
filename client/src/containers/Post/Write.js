@@ -20,7 +20,7 @@ class Write extends Component {
             const { title, content } = this.state;
             const writer = {username: "admin"};
     
-            const result = await writePost({writer, title, content});
+            await writePost({writer, title, content});
 
             history.push('/post/list');
         } catch (e) {

@@ -11,20 +11,23 @@ class List extends Component {
     constructor(props) {
         super(props);
         this.state = {list: []};
-    }
 
-    componentDidMount() {
-        this.handlePostList();
+        this.handlePostList = this.handlePostList.bind(this);
     }
 
     handlePostList = async () => {
         try {
-            const list = await postList();
-            const result = JSON.parse(list.request.response);
-            this.setState({list: result})
+            const result = await postList();
+            const list = JSON.parse(result.request.response);
+            this.setState({list});
+
         } catch (e) {
             console.log("An error occured.");
         }
+    }
+
+    componentDidMount() {
+        this.handlePostList();
     }
 
     render (){
@@ -35,6 +38,10 @@ class List extends Component {
                     title="title"
                     content="content"
                 />
+
+                {this.state.list.map((value, index) => {
+                    return <PostContent title={value.title} content={value.content}/>
+                })}
             </div>
         )
     }
