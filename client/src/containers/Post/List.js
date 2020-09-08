@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { PageTitle, PostContent } from 'components/Post';
 import { postList } from 'lib/api/post'
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux'
-import * as postActions from 'redux/modules/post';
 
 
 class List extends Component {
@@ -39,7 +36,15 @@ class List extends Component {
                     button="글 쓰기"
                 />
                 {this.state.list.map((value, index) => {
-                    return <PostContent key={index} title={value.title} content={value.content}/>
+                    return (
+                        <PostContent
+                            key={index}
+                            title={value.title}
+                            content={value.content}
+                            id={value._id}
+                            onClick={this.handlePostList}
+                        />
+                    )
                 })}
             </div>
         )

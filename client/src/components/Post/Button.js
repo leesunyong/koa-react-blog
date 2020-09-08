@@ -28,7 +28,7 @@ class Button extends Component {
 
     render() {
         return (
-            <Wrapper onClick = {this.props.onClick}>
+            <Wrapper onClick = {this.props.onClick} to = {this.props.to}>
                 {this.props.children}
             </Wrapper>
         );

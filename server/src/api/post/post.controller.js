@@ -6,7 +6,6 @@ exports.list = async (ctx) => {
 
     try {
         list = await Post.getList();
-        console.log(list);
     } catch (e) {
         ctx.throw(500, e);
     }
@@ -34,4 +33,22 @@ exports.write = async(ctx) => {
     }
 
     ctx.body = post;
+};
+
+
+exports.delete = async (ctx) => {
+    const { id } = ctx.params;
+
+    console.log(id);
+
+    try {
+        await Post.findByIdAndRemove(id).exec();
+    } catch (e) {
+        if (e.name === 'CastError') {
+            ctx.status = 400;
+            return;
+        }
+    }
+
+    ctx.status = 204;
 };
