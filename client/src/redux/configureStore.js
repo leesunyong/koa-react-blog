@@ -11,6 +11,14 @@ const configureStore = (initialState) => {
     const store = createStore(modules, initialState, composeEnhancers(
         applyMiddleware(penderMiddleware())
     ));
+    
+    
+    if (module.hot) {
+        module.hot.accept('./modules', () => {
+            const nextRootReducer = require('./modules').default;
+            store.replaceReducer(nextRootReducer);
+        });
+    }
 
 
     return store;
