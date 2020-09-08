@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { PostContentTitle, PostContent } from 'components/Post';
+import { postList } from 'lib/api/post'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import * as postActions from 'redux/modules/post';
@@ -7,19 +8,22 @@ import * as postActions from 'redux/modules/post';
 
 class List extends Component {
 
-    handlePostList = async () => {
-        const { PostActions } = this.props;
-        
-        try {
-            await PostActions.postList();
-            const response = this.props.result.toJS();
-        
-            return response;
+    constructor(props) {
+        super(props);
+        this.state = {list: []};
+    }
 
+    componentDidMount() {
+        this.handlePostList();
+    }
+
+    handlePostList = async () => {
+        try {
+            const list = await postList();
+            const result = JSON.parse(list.request.response);
+            this.setState({list: result})
         } catch (e) {
             console.log("An error occured.");
-
-            return undefined
         }
     }
 
@@ -27,18 +31,14 @@ class List extends Component {
         return (
             <div>
                 <PostContentTitle title="글 목록" />
-                <PostContent title="text" content="text" />
+                <PostContent
+                    title={this.state.list[0].title}
+                    content={this.state.list[0].content}
+                />
             </div>
         )
     }
 }
 
 
-export default connect (
-    (state) => ({
-        result: state.post.get('result')
-    }),
-    (dispatch) => ({
-        PostActions: bindActionCreators(postActions, dispatch),
-    })
-)(List);
+export default List;

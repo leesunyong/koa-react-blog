@@ -2,12 +2,11 @@ const Post = require('models/Post');
 
 
 exports.list = async (ctx) => {
-    console.log('list');
-
     let list = null;
 
     try {
         list = await Post.getList();
+        console.log(list);
     } catch (e) {
         ctx.throw(500, e);
     }

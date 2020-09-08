@@ -33,7 +33,10 @@ class InputWithLabel extends Component {
                 <Label>
                     {this.props.label}
                 </Label>
-                <Input {...this.props.rest} />
+                <Input
+                    name={this.props.name}
+                    onChange={this.props.onChange}
+                />
             </Wrapper>
         );
     }
