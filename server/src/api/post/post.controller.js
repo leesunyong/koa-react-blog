@@ -36,13 +36,28 @@ exports.write = async(ctx) => {
 };
 
 
+exports.get = async (ctx) => {
+    const { id } = ctx.params;
+
+    let result = null;
+    try {
+        result = await Post.findById(id);
+
+    } catch (e) {
+        ctx.status = 404;
+        return;
+    }
+
+    ctx.status = 200;
+    ctx.body = result;
+}
+
+
 exports.delete = async (ctx) => {
     const { id } = ctx.params;
 
-    console.log(id);
-
     try {
-        await Post.findByIdAndRemove(id).exec();
+        await Post.findByIdAndRemove(id);
     } catch (e) {
         if (e.name === 'CastError') {
             ctx.status = 400;

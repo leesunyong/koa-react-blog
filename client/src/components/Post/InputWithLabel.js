@@ -36,6 +36,7 @@ class InputWithLabel extends Component {
                 <Input
                     name={this.props.name}
                     onChange={this.props.onChange}
+                    value={this.props.value}
                 />
             </Wrapper>
         );

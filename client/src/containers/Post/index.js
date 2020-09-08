@@ -1,2 +1,3 @@
 export { default as List } from './List';
 export { default as Write } from './Write';
+export { default as Update } from './Update';

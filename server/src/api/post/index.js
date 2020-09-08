@@ -4,6 +4,7 @@ const postCtrl = require('./post.controller');
 
 
 post.get('/list', postCtrl.list);
+post.get('/get/:id', postCtrl.get);
 post.post('/write', postCtrl.write);
 post.delete('/delete/:id', postCtrl.delete);
 

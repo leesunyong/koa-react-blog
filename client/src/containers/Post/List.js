@@ -17,6 +17,7 @@ class List extends Component {
             const result = await postList();
             const list = JSON.parse(result.request.response);
             this.setState({list});
+            console.log(list);
 
         } catch (e) {
             console.log("An error occured.");

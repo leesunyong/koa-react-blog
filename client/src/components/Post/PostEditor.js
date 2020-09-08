@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Editor, EditorState, convertToRaw} from 'draft-js';
+import {Editor, EditorState, ContentState, convertToRaw} from 'draft-js';
 
 const styles = {
     editor: {
@@ -13,15 +13,10 @@ const styles = {
 class PostEditor extends Component {
     constructor(props) {
         super(props);
+        
         this.state = {editorState: EditorState.createEmpty()};
-        this.onChange = (editorState) => {
-            this.setState({editorState});
-            
-            const blocks = convertToRaw(editorState.getCurrentContent()).blocks;
-            const value = blocks.map(block =>
-                (!block.text.trim() && '\n') || block.text).join('\n');
-            this.props.onChange(value);
-        }
+        
+
         this.setEditor = (editor) => {
             this.editor = editor;
         };
@@ -31,19 +26,33 @@ class PostEditor extends Component {
                 this.editor.focus();
             }
         };
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange (editorState) {
+        this.setState({editorState});
+
+        const blocks = convertToRaw(editorState.getCurrentContent()).blocks;
+        const value = blocks
+            .map(block => (!block.text.trim() && '\n') || block.text)
+            .join('\n');
     }
 
     componentDidMount() {
+        this.setState({editorState:EditorState.createWithContent(ContentState.createFromText(this.props.content))});
         this.focusEditor();
+        console.log(this.props.content);
     }
 
     render() {
         return (
         <div style={styles.editor} onClick={this.focusEditor}>
             <Editor
+                value="text"
                 ref={this.setEditor}
                 editorState={this.state.editorState}
-                onChange={this.onChange}
+                onChange={this.handleChange}
             />
         </div>
         );

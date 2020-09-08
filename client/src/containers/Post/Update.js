@@ -1,16 +1,35 @@
 import React, { Component } from 'react';
 import { PageTitle, PostEditor, Button, InputWithLabel, LinkButton } from 'components/Post';
-import { writePost } from 'lib/api/post'
+import { getPost, writePost } from 'lib/api/post'
 
 
-class Write extends Component {
+class Update extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { title : '', content : ''};
+        this.state = { id : '', title : '', content : ''};
 
+        this.updateHandle = this.updateHandle.bind(this);
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleContentChange = this.handleContentChange.bind(this);
+    }
+
+    componentDidMount() {
+        this.updateHandle();
+    }
+
+    updateHandle = async () => {
+        const id = this.props.location.search.slice(1);
+        this.setState({id});
+
+        try {
+            const result = await getPost({id});
+            const {_id, title, content} = result.data[0];
+
+            this.setState({_id, title, content})
+        } catch (e) {
+            console.log("알 수 없는 에러가 발생했습니다.");
+        }
     }
 
     writeHandle = async () => {
@@ -33,28 +52,29 @@ class Write extends Component {
     }
 
     handleContentChange (text) {
-        this.setState({ content : text });
     }
 
 
     render () {
 
+        console.log(this.state.content);
         return (
             <div>
                 <PageTitle
-                    title="글 쓰기"
+                    title="글 수정"
                     to="/post/list"
                     button="글 목록"
                 />
                 <InputWithLabel
                     label="제목"
                     name="title"
+                    value={this.state.title}
                     onChange={this.handleTitleChange}
                 />
-                <PostEditor onChange={this.handleContentChange}/>
+                <PostEditor onChange={this.handleContentChange} content={this.state.content}/>
                 <div>
                     <Button onClick={this.writeHandle}>
-                        저장
+                        수정
                     </Button>
                     <LinkButton to="/post/list">
                         취소
@@ -66,4 +86,4 @@ class Write extends Component {
 }
 
 
-export default Write;
+export default Update;

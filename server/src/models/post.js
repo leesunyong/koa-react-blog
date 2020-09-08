@@ -17,6 +17,10 @@ Post.statics.getList = function() {
 };
 
 
+Post.statics.findById = function(id) {
+    return this.find({_id: id}).exec();
+}
+
 Post.statics.findByIdAndRemove = function(id) {
     return this.findOneAndDelete({_id: id}).exec();
 }

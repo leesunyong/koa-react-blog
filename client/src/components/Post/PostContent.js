@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Button from './Button';
+import { Button, LinkButton } from 'components/Post';
 import oc from 'open-color';
 import { deletePost } from 'lib/api/post'
 
@@ -40,8 +40,6 @@ class PostContent extends Component {
     }
 
     handleDelete = async () => {
-
-        const { history } = this.props;
         try {
             const id = this.props.id;
             await deletePost({id});
@@ -60,6 +58,9 @@ class PostContent extends Component {
                 <Content>
                     {this.props.content}
                 </Content>
+                <LinkButton to={"/post/update?" + this.props.id}>
+                    수정
+                </LinkButton>
                 <Button onClick={this.handleDelete} to="/post/list">
                     삭제
                 </Button>
