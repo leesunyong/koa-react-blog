@@ -13,7 +13,7 @@ const Post = new Schema({
 
 
 Post.statics.getList = function() {
-    return this.find({}).exec();
+    return this.find({}).sort({ _id: -1 }).exec();
 };
 
 

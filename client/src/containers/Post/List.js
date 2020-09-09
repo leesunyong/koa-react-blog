@@ -14,8 +14,15 @@ class List extends Component {
         super(props);
         this.state = {itemNum: 0, list: []};
 
+        this.handleDelete = this.handleDelete.bind(this);
         this.handlePostList = this.handlePostList.bind(this);
         this.infiniteScroll = this.infiniteScroll.bind(this);
+    }
+
+    handleDelete = () => {
+        const itemNum = this.state.itemNum - 1;
+        this.setState({itemNum});
+        this.handlePostList();
     }
 
     handlePostList = async () => {
@@ -23,10 +30,7 @@ class List extends Component {
             let itemNum = this.state.itemNum;
             const result = await postList({ itemNum });
             let list = JSON.parse(result.request.response);
-            
-            list = this.state.list.concat(list);
-
-            itemNum = this.state.itemNum + list.length;
+            itemNum = list.length;
             this.setState({itemNum, list});
 
         } catch (e) {
@@ -65,10 +69,8 @@ class List extends Component {
                     return (
                         <PostContent
                             key={index}
-                            title={value.title}
-                            content={value.content}
-                            id={value._id}
-                            onClick={this.handlePostList}
+                            value={value}
+                            onClick={this.handleDelete}
                         />
                     )
                 })}

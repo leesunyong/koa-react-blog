@@ -24,11 +24,15 @@ const Title = styled.div`
 
 const Content = styled.div`
     width: 100%,
-    font-size = 16px;
+    font-size:16px;
     font-weight: 300;
     color: #000;
     margin-bottom: 1rem;   
     min-height: 3rem;
+`;
+
+const PostInfo = styled.div`
+    text-align: center;
 `;
 
 class PostContent extends Component {
@@ -41,7 +45,7 @@ class PostContent extends Component {
 
     handleDelete = async () => {
         try {
-            const id = this.props.id;
+            const id = this.props.value._id;
             await deletePost({id});
             this.props.onClick();
         } catch (e) {
@@ -53,13 +57,17 @@ class PostContent extends Component {
         return (
             <Wrapper>
                 <Title>
-                    {this.props.title}
+                    {this.props.value.title}
                 </Title>
+                <PostInfo>
+                    {this.props.value.writer.username + " "}
+                    {this.props.value.writtenAt}
+                </PostInfo>
                 <Content>
-                    {this.props.content}
+                    {this.props.value.content}
                 </Content>
                 <CenterAlignedWrapper>
-                    <LinkButton to={"/post/update?" + this.props.id}>
+                    <LinkButton to={"/post/update?" + this.props.value._id}>
                         수정
                     </LinkButton>
                     <Button onClick={this.handleDelete} to="/post/list">
