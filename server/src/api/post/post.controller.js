@@ -39,6 +39,27 @@ exports.write = async(ctx) => {
 };
 
 
+exports.update = async(ctx) => {
+    const {
+        id,
+        title,
+        content
+    } = ctx.request.body;
+    
+    try {
+        const post = await Post.findByIdAndUpdate(id, {title, content}, {
+            new: true
+        });
+
+        console.log(post);
+    } catch (e) {
+        return ctx.throw(500, e);
+    }
+
+    ctx.status = 200;
+};
+
+
 exports.get = async (ctx) => {
     const { id } = ctx.params;
 

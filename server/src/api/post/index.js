@@ -7,6 +7,6 @@ post.get('/list/:num', postCtrl.list);
 post.get('/get/:id', postCtrl.get);
 post.post('/write', postCtrl.write);
 post.delete('/delete/:id', postCtrl.delete);
-
+post.patch('/update', postCtrl.update);
 
 module.exports = post;

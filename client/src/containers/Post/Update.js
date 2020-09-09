@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PageTitle, PostEditor, Button, CenterAlignedWrapper, InputWithLabel, LinkButton } from 'components/Post';
-import { getPost, writePost } from 'lib/api/post'
+import { getPost, updatePost } from 'lib/api/post'
 import styled from 'styled-components'
 
 
@@ -41,10 +41,11 @@ class Update extends Component {
         const { history } = this.props;
 
         try {
-            const { title, content } = this.state;
-            const writer = {username: "admin"};
+            const { id, title, content } = this.state;
+
+            console.log(this.state.content);
     
-            await writePost({writer, title, content});
+            await updatePost({id, title, content});
 
             history.push('/post/list');
         } catch (e) {
@@ -57,12 +58,11 @@ class Update extends Component {
     }
 
     handleContentChange (text) {
+        this.setState({ content : text });
     }
 
 
     render () {
-
-        console.log(this.state.content);
         return (
             <Wrapper>
                 <PageTitle
@@ -76,7 +76,10 @@ class Update extends Component {
                     value={this.state.title}
                     onChange={this.handleTitleChange}
                 />
-                <PostEditor onChange={this.handleContentChange} content={this.state.content}/>
+                <PostEditor
+                    onChange={this.handleContentChange}
+                    content={this.state.content}
+                />
                 <CenterAlignedWrapper>
                     <Button onClick={this.writeHandle}>
                         수정

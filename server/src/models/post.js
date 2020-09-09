@@ -25,4 +25,5 @@ Post.statics.findByIdAndRemove = function(id) {
     return this.findOneAndDelete({_id: id}).exec();
 }
 
+
 module.exports = mongoose.model('Post', Post);
