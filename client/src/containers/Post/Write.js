@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { PageTitle, PostEditor, Button, InputWithLabel, LinkButton } from 'components/Post';
+import { PageTitle, PostEditor, Button, CenterAlignedWrapper, InputWithLabel, LinkButton } from 'components/Post';
 import { writePost } from 'lib/api/post'
-import styled from 'styled-components';
+import styled from 'styled-components'
 
-const BottomButtonWrapper = styled.div`
-    display: flex;
-    justify-content: center;
+
+const Wrapper = styled.div`
+    padding: 30px 0 30px 0;
 `;
 
 class Write extends Component {
@@ -23,7 +23,7 @@ class Write extends Component {
 
         try {
             const { title, content } = this.state;
-            const writer = {username: "admin"};
+            const writer = { username: "admin" };
     
             await writePost({writer, title, content});
 
@@ -45,7 +45,7 @@ class Write extends Component {
     render () {
 
         return (
-            <div>
+            <Wrapper>
                 <PageTitle
                     title="글 쓰기"
                     to="/post/list"
@@ -57,15 +57,15 @@ class Write extends Component {
                     onChange={this.handleTitleChange}
                 />
                 <PostEditor onChange={this.handleContentChange}/>
-                <BottomButtonWrapper>
+                <CenterAlignedWrapper>
                     <Button onClick={this.writeHandle}>
                         저장
                     </Button>
                     <LinkButton to="/post/list">
                         취소
                     </LinkButton>
-                </BottomButtonWrapper>
-            </div>
+                </CenterAlignedWrapper>
+            </Wrapper>
         );
     }
 }

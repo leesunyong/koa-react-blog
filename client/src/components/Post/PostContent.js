@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Button, LinkButton } from 'components/Post';
+import { Button, CenterAlignedWrapper, LinkButton } from 'components/Post';
 import oc from 'open-color';
 import { deletePost } from 'lib/api/post'
 
@@ -31,11 +31,6 @@ const Content = styled.div`
     min-height: 3rem;
 `;
 
-const BottomButtonWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-`;
-
 class PostContent extends Component {
 
     constructor (props) {
@@ -63,14 +58,14 @@ class PostContent extends Component {
                 <Content>
                     {this.props.content}
                 </Content>
-                <BottomButtonWrapper>
+                <CenterAlignedWrapper>
                     <LinkButton to={"/post/update?" + this.props.id}>
                         수정
                     </LinkButton>
                     <Button onClick={this.handleDelete} to="/post/list">
                         삭제
                     </Button>
-                </BottomButtonWrapper>
+                </CenterAlignedWrapper>
             </Wrapper>
         )
     }

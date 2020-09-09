@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { PageTitle, PostEditor, Button, InputWithLabel, LinkButton } from 'components/Post';
+import { PageTitle, PostEditor, Button, CenterAlignedWrapper, InputWithLabel, LinkButton } from 'components/Post';
 import { getPost, writePost } from 'lib/api/post'
-import styled from 'styled-components';
+import styled from 'styled-components'
 
-const BottomWrapper = styled.div`
-    
+
+const Wrapper = styled.div`
+    padding: 30px 0 30px 0;
 `;
-
 
 class Update extends Component {
 
@@ -64,7 +64,7 @@ class Update extends Component {
 
         console.log(this.state.content);
         return (
-            <div>
+            <Wrapper>
                 <PageTitle
                     title="글 수정"
                     to="/post/list"
@@ -77,15 +77,15 @@ class Update extends Component {
                     onChange={this.handleTitleChange}
                 />
                 <PostEditor onChange={this.handleContentChange} content={this.state.content}/>
-                <BottomWrapper>
+                <CenterAlignedWrapper>
                     <Button onClick={this.writeHandle}>
                         수정
                     </Button>
                     <LinkButton to="/post/list">
                         취소
                     </LinkButton>
-                </BottomWrapper>
-            </div>
+                </CenterAlignedWrapper>
+            </Wrapper>
         );
     }
 }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-export const postList = () => axios.get('/api/post/list');
+export const postList = ({itemNum}) => axios.get('/api/post/list/' + itemNum);
 
 export const getPost = ({id}) => axios.get('/api/post/get/'+id);
 

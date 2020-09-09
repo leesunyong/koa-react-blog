@@ -2,10 +2,13 @@ const Post = require('models/Post');
 
 
 exports.list = async (ctx) => {
-    let list = null;
+    
+    const { num } = ctx.params;
 
+    let list = null;
     try {
         list = await Post.getList();
+        list = list.slice(num, num + 3);
     } catch (e) {
         ctx.throw(500, e);
     }
