@@ -16,8 +16,8 @@ class HeadingStyleDropDown extends React.Component {
       <span>
       <select value={this.props.active} onChange={this.onToggle}>
         <option value=''>Heading Levels</option>
-        {this.props.blockTypeHeadings.map((heading) => {
-          return <option className={className} value={heading.style}>{heading.label}</option>
+        {this.props.blockTypeHeadings.map((heading, index) => {
+          return <option key={index} className={className} value={heading.style}>{heading.label}</option>
         })}
       </select>
     </span>

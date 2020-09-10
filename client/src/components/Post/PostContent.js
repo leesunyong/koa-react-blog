@@ -6,8 +6,10 @@ import Editor from "draft-js-plugins-editor"
 import { styleMap, getBlockStyle } from "./blockStyles/BlockStyles";
 import { mediaBlockRenderer } from 'components/Post/entities/mediaBlockRenderer'
 import { EditorState, convertFromRaw } from 'draft-js';
+import createHighlightPlugin from './plugins/highlightPlugin'
 
 
+const highlightPlugin = createHighlightPlugin();
 
 const Title = styled.p`
     font-size: 14.5px;
@@ -34,6 +36,8 @@ class PostContent extends Component {
             noteTitle: this.props.value.title,
             editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(this.props.value.content))),
         };
+
+        this.plugins = [ highlightPlugin ];
     }
 
     deletePost = async () => {
@@ -48,6 +52,10 @@ class PostContent extends Component {
 
     editPost = () => {
         this.props.editPost(this.props.value._id);
+    }
+
+    onChnage = () => {
+
     }
 
     render() {
@@ -77,6 +85,7 @@ class PostContent extends Component {
 
                         editorState={this.state.editorState}
 
+                        onChange={this.onChnage}
                         plugins={this.plugins}
                         handleKeyCommand={this.handleKeyCommand}
                         blockRendererFn={mediaBlockRenderer}

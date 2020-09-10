@@ -5,11 +5,7 @@ import createHighlightPlugin from './plugins/highlightPlugin'
 import { mediaBlockRenderer } from 'components/Post/entities/mediaBlockRenderer'
 import { InlineStyles } from 'components/Post'
 
-import {
-    styleMap,
-    getBlockStyle,
-    BlockStyleControls
-} from "./blockStyles/BlockStyles";
+import { styleMap, getBlockStyle, BlockStyleControls } from "./blockStyles/BlockStyles";
 
 
 const highlightPlugin = createHighlightPlugin();

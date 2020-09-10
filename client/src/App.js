@@ -7,9 +7,7 @@ import './App.css';
 class App extends Component {
     render() {
         return (
-            <div>
-                <Route path="/post" component={Post}/>
-            </div>
+            <Route path="/post" component={Post}/>
         )
     }
 }
