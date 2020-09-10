@@ -42,8 +42,6 @@ class Update extends Component {
 
         try {
             const { id, title, content } = this.state;
-
-            console.log(this.state.content);
     
             await updatePost({id, title, content});
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PageTitle, PostEditor, Button, CenterAlignedWrapper, InputWithLabel, LinkButton } from 'components/Post';
+import { PageTitle, PostEditor, Button, CenterAlignedWrapper, InputWithLabel, LinkButton, PageContainer } from 'components/Post';
 import { writePost } from 'lib/api/post'
 import styled from 'styled-components'
 
@@ -57,6 +57,7 @@ class Write extends Component {
                     onChange={this.handleTitleChange}
                 />
                 <PostEditor onChange={this.handleContentChange}/>
+                <PageContainer />
                 <CenterAlignedWrapper>
                     <Button onClick={this.writeHandle}>
                         저장
