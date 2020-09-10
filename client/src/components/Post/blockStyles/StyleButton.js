@@ -1,12 +1,4 @@
 import React from "react";
-import { EditorState, Editor, RichUtils, AtomicBlockUtils } from "draft-js";
-import {
-  styleMap,
-  getBlockStyle,
-  BLOCK_TYPES,
-  BLOCK_TYPE_HEADINGS,
-  BlockStyleControls
-} from "./BlockStyles";
 
 const style = {};
 

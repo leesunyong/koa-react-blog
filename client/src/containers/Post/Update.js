@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PageTitle, PostEditor, Button, CenterAlignedWrapper, InputWithLabel, LinkButton } from 'components/Post';
+import { PageTitle, PostEditor } from 'components/Post';
 import { getPost, updatePost } from 'lib/api/post'
 import styled from 'styled-components'
 
@@ -12,11 +12,16 @@ class Update extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { id : '', title : '', content : ''};
-
-        this.updateHandle = this.updateHandle.bind(this);
-        this.handleTitleChange = this.handleTitleChange.bind(this);
-        this.handleContentChange = this.handleContentChange.bind(this);
+        this.state = {
+            id: '',
+            writer: {
+                username: ''
+            },
+            displayedPost: {
+                title: '',
+                content: ''
+            }
+        };
     }
 
     componentDidMount() {
@@ -29,21 +34,23 @@ class Update extends Component {
 
         try {
             const result = await getPost({id});
-            const {_id, title, content} = result.data[0];
-
-            this.setState({_id, title, content})
+            const {_id, writer, title, content} = result.data[0];
+            const displayedPost = {title, writer, content};
+            this.setState({_id, displayedPost})
         } catch (e) {
             console.log("알 수 없는 에러가 발생했습니다.");
         }
     }
 
-    writeHandle = async () => {
-        const { history } = this.props;
+    updateNote = async (title, content) => {
+        const displayedPost = {title, content};
+        this.setState({displayedPost});
 
         try {
-            const { id, title, content } = this.state;
-    
-            await updatePost({id, title, content});
+            const { history } = this.props;
+            const { id, writer } = this.state;
+            
+            await updatePost({ id, writer, title, content });
 
             history.push('/post/list');
         } catch (e) {
@@ -51,14 +58,10 @@ class Update extends Component {
         }
     }
 
-    handleTitleChange (event) {
-        this.setState({ title : event.target.value });
+    cancel = () => {
+        const { history } = this.props;
+        history.push('/post/list');
     }
-
-    handleContentChange (text) {
-        this.setState({ content : text });
-    }
-
 
     render () {
         return (
@@ -68,24 +71,11 @@ class Update extends Component {
                     to="/post/list"
                     button="글 목록"
                 />
-                <InputWithLabel
-                    label="제목"
-                    name="title"
-                    value={this.state.title}
-                    onChange={this.handleTitleChange}
-                />
                 <PostEditor
-                    onChange={this.handleContentChange}
-                    content={this.state.content}
+                    displayedPost={this.state.displayedPost}
+                    updateNote={this.updateNote}
+                    cancel={this.cancel}
                 />
-                <CenterAlignedWrapper>
-                    <Button onClick={this.writeHandle}>
-                        수정
-                    </Button>
-                    <LinkButton to="/post/list">
-                        취소
-                    </LinkButton>
-                </CenterAlignedWrapper>
             </Wrapper>
         );
     }

@@ -19,12 +19,6 @@ class List extends Component {
         this.infiniteScroll = this.infiniteScroll.bind(this);
     }
 
-    handleDelete = () => {
-        const itemNum = this.state.itemNum - 1;
-        this.setState({itemNum});
-        this.handlePostList();
-    }
-
     handlePostList = async () => {
         try {
             let itemNum = this.state.itemNum;
@@ -57,6 +51,17 @@ class List extends Component {
         }
     }
 
+    editPost = (id) => {
+        const { history } = this.props;
+        history.push('/post/update?'+id);
+    }
+
+    handleDelete = () => {
+        const itemNum = this.state.itemNum - 1;
+        this.setState({itemNum});
+        this.handlePostList();
+    }
+
     render (){
         return (
             <Wrapper>
@@ -70,7 +75,8 @@ class List extends Component {
                         <PostContent
                             key={index}
                             value={value}
-                            onClick={this.handleDelete}
+                            deletePost={this.handleDelete}
+                            editPost={this.editPost}
                         />
                     )
                 })}

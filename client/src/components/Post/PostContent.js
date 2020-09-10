@@ -1,80 +1,90 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Button, CenterAlignedWrapper, LinkButton } from 'components/Post';
-import oc from 'open-color';
 import { deletePost } from 'lib/api/post'
 
-const Wrapper = styled.div`
-    width: 1000px;
-    margin-top: 100px;
-    padding: 20px 20px 0 20px;
-    border: 1px solid #000
-`;
+import Editor from "draft-js-plugins-editor"
+import { styleMap, getBlockStyle } from "./blockStyles/BlockStyles";
+import { mediaBlockRenderer } from 'components/Post/entities/mediaBlockRenderer'
+import { EditorState, convertFromRaw } from 'draft-js';
 
-const Title = styled.div`
-    width: 100%,
 
-    font-size: 20px;
-    font-weight: 500;
-    color: ${oc.gray[8]};
-    text-align: center;
-    
-    margin-bottom: 1rem;
-`;
 
-const Content = styled.div`
-    width: 100%,
-    font-size:16px;
-    font-weight: 300;
-    color: #000;
-    margin-bottom: 1rem;   
-    min-height: 3rem;
-`;
-
-const PostInfo = styled.div`
-    text-align: center;
+const Title = styled.p`
+    font-size: 14.5px;
+    line-height: 20px;
+    height: 20px;
+    letter-spacing: 0.7px;
+    font-family: "Open Sans";
+    border-bottom: #f6f7fb solid 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    width: 80%;
+    position: inline;
+    padding: 0.5em;
+    margin-left: 0.6em
 `;
 
 class PostContent extends Component {
 
     constructor (props) {
         super(props);
-        
-        this.handleDelete = this.handleDelete.bind(this);
+
+        this.state = {
+            noteTitle: this.props.value.title,
+            editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(this.props.value.content))),
+        };
     }
 
-    handleDelete = async () => {
+    deletePost = async () => {
         try {
             const id = this.props.value._id;
             await deletePost({id});
-            this.props.onClick();
+            this.props.deletePost();
         } catch (e) {
             console.log("알 수 없는 에러 발생");
         }
     }
-    
+
+    editPost = () => {
+        this.props.editPost(this.props.value._id);
+    }
+
     render() {
         return (
-            <Wrapper>
-                <Title>
-                    {this.props.value.title}
-                </Title>
-                <PostInfo>
-                    {this.props.value.writer.username + " "}
-                    {this.props.value.writtenAt}
-                </PostInfo>
-                <Content>
-                    {this.props.value.content}
-                </Content>
-                <CenterAlignedWrapper>
-                    <LinkButton to={"/post/update?" + this.props.value._id}>
-                        수정
-                    </LinkButton>
-                    <Button onClick={this.handleDelete} to="/post/list">
+            <div className="editorContainer">
+                <div className="aboveEditor">
+                    <span className="noteTitle">
+                        <Title>
+                            {this.state.noteTitle + " ("}
+                            {this.props.value.writer.username + " "}
+                            {this.props.value.writtenAt + ")"}
+                        </Title>
+                    </span>
+                    <button className="submitNote" onClick={this.deletePost}>
                         삭제
-                    </Button>
-                </CenterAlignedWrapper>
-            </Wrapper>
+                    </button>
+                    <button className="submitNote" onClick={this.editPost} >
+                        수정
+                    </button>
+                </div>
+                
+                <div className="editors">
+                    <Editor
+                        readOnly={true}
+                        blockStyleFn={getBlockStyle}
+                        customStyleMap={styleMap}
+
+                        editorState={this.state.editorState}
+
+                        plugins={this.plugins}
+                        handleKeyCommand={this.handleKeyCommand}
+                        blockRendererFn={mediaBlockRenderer}
+                        blockStyleFn={getBlockStyle}
+                        ref="editor"
+                    />
+                </div>
+            </div>
         )
     }
 }

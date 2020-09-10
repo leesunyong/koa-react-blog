@@ -1,5 +1,4 @@
 import React from "react";
-import { RichUtils } from "draft-js";
 import StyleButton from "components/Post/blockStyles/StyleButton";
 
 const highlightLabel = () => {
@@ -15,10 +14,8 @@ export const INLINE_HEADINGS = [
 ]
 
 export const InlineStyles = props => {
-	const { editorState, onToggle, contentState } = props;
-    const key = editorState.getSelection().getStartKey();
+	const { editorState } = props;
     const sty = editorState.getCurrentInlineStyle()
-    let newState = RichUtils.toggleInlineStyle(editorState, sty)
 
 	return (
 		<span className="RichEditor-controls">
@@ -39,7 +36,7 @@ export const InlineStyles = props => {
                 active={sty.has("HIGHLIGHT")}
                 label={highlightLabel()}
                 onToggle={props.onToggle}
-                style="HIGHLIGHT"
+                style={"HIGHLIGHT"}
                 className="inline styleButton"
                 id="highlight"
             />

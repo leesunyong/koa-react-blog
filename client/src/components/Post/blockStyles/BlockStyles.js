@@ -1,5 +1,4 @@
 import React from "react";
-import { EditorState, Editor, RichUtils, AtomicBlockUtils } from "draft-js";
 import StyleButton from "./StyleButton";
 import HeadingStyleDropDown from './HeadingStyleDropDown'
 
@@ -14,7 +13,6 @@ export const styleMap = {
 
 
 };
-
 
 
 export function getBlockStyle(block) {
@@ -37,12 +35,12 @@ export const BLOCK_TYPES = [
 ];
 
 export const BLOCK_TYPE_HEADINGS = [
-  { label: "H1", style: "header-one" },
-  { label: "H2", style: "header-two" },
-  { label: "H3", style: "header-three" },
-  { label: "H4", style: "header-four" },
-  { label: "H5", style: "header-five" },
-  { label: "H6", style: "header-six" }
+	{ label: "H1", style: "header-one" },
+	{ label: "H2", style: "header-two" },
+	{ label: "H3", style: "header-three" },
+	{ label: "H4", style: "header-four" },
+	{ label: "H5", style: "header-five" },
+	{ label: "H6", style: "header-six" }
 ]
 
 export const BlockStyleControls = props => {

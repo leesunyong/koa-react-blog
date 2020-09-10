@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PageTitle, PostEditor, Button, CenterAlignedWrapper, InputWithLabel, LinkButton, PageContainer } from 'components/Post';
+import { PageTitle, PostEditor, Button, CenterAlignedWrapper, InputWithLabel, LinkButton } from 'components/Post';
 import { writePost } from 'lib/api/post'
 import styled from 'styled-components'
 
@@ -12,20 +12,27 @@ class Write extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { title : '', content : ''};
-
-        this.handleTitleChange = this.handleTitleChange.bind(this);
-        this.handleContentChange = this.handleContentChange.bind(this);
+        this.state = {
+            id: '',
+            writer: {
+                username: ''
+            },
+            displayedPost: {
+                title: '',
+                content: ''
+            }
+        };
     }
 
-    writeHandle = async () => {
-        const { history } = this.props;
+    updateNote = async (title, content) => {
+        const displayedPost = {title, content};
+        this.setState({displayedPost});
 
         try {
-            const { title, content } = this.state;
-            const writer = { username: "admin" };
-    
-            await writePost({writer, title, content});
+            const { history } = this.props;
+            const { writer } = { username: "admin" };
+            
+            await writePost({ writer, title, content });
 
             history.push('/post/list');
         } catch (e) {
@@ -33,14 +40,10 @@ class Write extends Component {
         }
     }
 
-    handleTitleChange (event) {
-        this.setState({ title : event.target.value });
+    cancel = () => {
+        const { history } = this.props;
+        history.push('/post/list');
     }
-
-    handleContentChange (text) {
-        this.setState({ content : text });
-    }
-
 
     render () {
 
@@ -51,21 +54,10 @@ class Write extends Component {
                     to="/post/list"
                     button="글 목록"
                 />
-                <InputWithLabel
-                    label="제목"
-                    name="title"
-                    onChange={this.handleTitleChange}
-                />
-                <PostEditor onChange={this.handleContentChange}/>
-                <PageContainer />
-                <CenterAlignedWrapper>
-                    <Button onClick={this.writeHandle}>
-                        저장
-                    </Button>
-                    <LinkButton to="/post/list">
-                        취소
-                    </LinkButton>
-                </CenterAlignedWrapper>
+                <PostEditor
+                    displayedPost={this.state.displayedPost}
+                    updateNote={this.updateNote}
+                    cancel={this.cancel}/>
             </Wrapper>
         );
     }
