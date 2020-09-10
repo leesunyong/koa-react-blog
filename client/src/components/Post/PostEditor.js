@@ -19,6 +19,7 @@ class PostEditor extends Component {
         };
         
         this.plugins = [ highlightPlugin ];
+        this.editorRef = React.createRef();
     }
 
     onChange = (editorState) => {
@@ -181,7 +182,7 @@ class PostEditor extends Component {
                         plugins={this.plugins}
                         handleKeyCommand={this.handleKeyCommand}
                         blockRendererFn={mediaBlockRenderer}
-                        ref="editor"
+                        ref={this.editorRef}
                     />
                 </div>
             </div>

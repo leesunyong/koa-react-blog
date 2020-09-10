@@ -30,8 +30,9 @@ body {
 }
 
 .aboveEditor {
-  font-size: 1.25em;
-  text-align: left;
+    font-size: 1.25em;
+    text-align: left;
+    height: 40px;
 }
 
 .tool-bar {
@@ -48,7 +49,7 @@ body {
 
 
 input[type="text"].noteTitle {
-    font-size: 14.5px;
+    font-size: 17.5px;
     line-height: 20px;
     height: 20px;
     letter-spacing: 0.7px;
@@ -69,19 +70,21 @@ button.submitNote {
     border-radius: 10px;
     font-size: 13px;
     float: right;
-    display: inline;
     padding: 0.5em;
     color: white;
     border: none;
     background-color:#194801;
     margin: 0.35em;
+
+    text-decoration: none;
+    cursor:pointer;
 }
 
 .editors {
     border: none;
     border-radius: 4px;
     padding: 1em 1.5em 3em 1.5em;
-    margin: -0.2em 0.6em 1em 0.6em;
+    margin: 0.5em 0.6em 1em 0.6em;
     font-family: "Helvetica";
     line-height: 1.4;
     color: #2C3A51;
@@ -175,3 +178,13 @@ select {
     font-size: 13px;
 }
   
+div.DraftEditor-root {
+    height: 100%;
+    width: 100%;
+}
+
+
+div.DraftEditor-editorContainer,
+div.public-DraftEditor-content {
+    height: 100%;
+}

@@ -11,10 +11,8 @@ import createHighlightPlugin from './plugins/highlightPlugin'
 
 const highlightPlugin = createHighlightPlugin();
 
-const Title = styled.p`
-    font-size: 14.5px;
-    line-height: 20px;
-    height: 20px;
+const Title = styled.span`
+    font-size: 17.5px;
     letter-spacing: 0.7px;
     font-family: "Open Sans";
     border-bottom: #f6f7fb solid 2px;
@@ -38,6 +36,7 @@ class PostContent extends Component {
         };
 
         this.plugins = [ highlightPlugin ];
+        this.editorRef = React.createRef();
     }
 
     deletePost = async () => {
@@ -89,7 +88,7 @@ class PostContent extends Component {
                         plugins={this.plugins}
                         handleKeyCommand={this.handleKeyCommand}
                         blockRendererFn={mediaBlockRenderer}
-                        ref="editor"
+                        ref={this.editorRef}
                     />
                 </div>
             </div>
