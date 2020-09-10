@@ -80,7 +80,6 @@ class PostContent extends Component {
                         plugins={this.plugins}
                         handleKeyCommand={this.handleKeyCommand}
                         blockRendererFn={mediaBlockRenderer}
-                        blockStyleFn={getBlockStyle}
                         ref="editor"
                     />
                 </div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PageTitle, PostEditor, Button, CenterAlignedWrapper, InputWithLabel, LinkButton } from 'components/Post';
+import { PageTitle, PostEditor } from 'components/Post';
 import { writePost } from 'lib/api/post'
 import styled from 'styled-components'
 

@@ -33,7 +33,6 @@ class PostEditor extends Component {
     }
     
     submitEditor = () => {
-        let displayedPost = this.props.displayedPost
         let contentState = this.state.editorState.getCurrentContent()
         let note = {title: this.state.noteTitle, content: convertToRaw(contentState)}
         if (this.state.noteTitle === "" || (note.content.blocks.length <= 1 && note.content.blocks[0].depth === 0 && note.content.blocks[0].text === "")) {
@@ -186,7 +185,6 @@ class PostEditor extends Component {
                         plugins={this.plugins}
                         handleKeyCommand={this.handleKeyCommand}
                         blockRendererFn={mediaBlockRenderer}
-                        blockStyleFn={getBlockStyle}
                         ref="editor"
                     />
                 </div>
