@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { PostWrapper } from 'components/Post';
 import { Route } from 'react-router-dom';
+
+import { PageWrapper } from 'components/Post';
 import { List, Update, Write } from 'containers/Post';
 
 
@@ -8,11 +9,11 @@ class Post extends Component {
 
     render () {
         return (
-            <PostWrapper>
+            <PageWrapper>
                 <Route path="/post/list" component={List} />
                 <Route path="/post/update" component={Update} />
                 <Route path="/post/write" component={Write} />
-            </PostWrapper>
+            </PageWrapper>
         );
     }
 }

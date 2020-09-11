@@ -1,40 +1,42 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+
 import { deletePost } from 'lib/api/post'
 
-import Editor from "draft-js-plugins-editor"
-import { styleMap, getBlockStyle } from "./blockStyles/BlockStyles";
-import { mediaBlockRenderer } from 'components/Post/entities/mediaBlockRenderer'
+import styled from 'styled-components';
+
 import { EditorState, convertFromRaw } from 'draft-js';
+import Editor from "draft-js-plugins-editor"
+import { mediaBlockRenderer } from 'components/Post/entities/mediaBlockRenderer'
+import { styleMap, getBlockStyle } from "./blockStyles/BlockStyles";
 import createHighlightPlugin from './plugins/highlightPlugin'
 
 import { Button } from '@material-ui/core';
 
-const highlightPlugin = createHighlightPlugin();
 
 const Title = styled.span`
     font-size: 17.5px;
     letter-spacing: 0.7px;
     font-family: "Open Sans";
     border-bottom: #f6f7fb solid 2px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
     width: 80%;
     position: inline;
     padding: 0.5em;
     margin-left: 0.6em
 `;
 
+const highlightPlugin = createHighlightPlugin();
+
+
 class PostContent extends Component {
 
     constructor (props) {
         super(props);
 
-        const { _id, title, writer, writtenAt } = this.props.value;
+        const post = this.props.post;
+        const { _id, title, writer, writtenAt } = post;
         this.state = {
             _id, title, writer, writtenAt,
-            editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(this.props.value.content))),
+            editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(post.content))),
         };
 
         this.plugins = [ highlightPlugin ];
@@ -42,9 +44,9 @@ class PostContent extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const value = this.props.value;
-        if (value !== prevProps.value) {
-            const { _id, title, writer, writtenAt, content } = value;
+        const post = this.props.post;
+        if (post !== prevProps.post) {
+            const { _id, title, writer, writtenAt, content } = post;
             this.setState({ _id, title, writer, writtenAt,
                 editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(content))),
             });
@@ -62,7 +64,7 @@ class PostContent extends Component {
     }
 
     editPost = () => {
-        this.props.editPost(this.props.value._id);
+        this.props.editPost(this.props.post._id);
     }
 
     onChnage = () => {
@@ -95,9 +97,7 @@ class PostContent extends Component {
                         readOnly={true}
                         blockStyleFn={getBlockStyle}
                         customStyleMap={styleMap}
-
                         editorState={this.state.editorState}
-
                         onChange={this.onChnage}
                         plugins={this.plugins}
                         handleKeyCommand={this.handleKeyCommand}
@@ -106,8 +106,9 @@ class PostContent extends Component {
                     />
                 </div>
             </div>
-        )
+        );
     }
 }
+
 
 export default PostContent;

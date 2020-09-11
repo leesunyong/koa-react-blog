@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+
+import { InlineStyles } from 'components/Post'
+
 import { EditorState, RichUtils, AtomicBlockUtils, convertToRaw, convertFromRaw, CompositeDecorator } from 'draft-js';
 import Editor from "draft-js-plugins-editor"
 import createHighlightPlugin from './plugins/highlightPlugin'
 import { mediaBlockRenderer } from 'components/Post/entities/mediaBlockRenderer'
-import { InlineStyles } from 'components/Post'
-
 import { styleMap, getBlockStyle, BlockStyleControls } from "./blockStyles/BlockStyles";
 
 import { Button } from '@material-ui/core';
@@ -25,33 +26,6 @@ class PostEditor extends Component {
         this.editorRef = React.createRef();
     }
 
-    onChange = (editorState) => {
-        
-        if (editorState.getDecorator() !== null) {
-            this.setState({ editorState });
-        }
-    }
-    
-    submitEditor = () => {
-        let contentState = this.state.editorState.getCurrentContent()
-        let note = {title: this.state.title, content: convertToRaw(contentState)}
-        if (this.state.title === "" || (note.content.blocks.length <= 1 && note.content.blocks[0].depth === 0 && note.content.blocks[0].text === "")) {
-            alert("Note cannot be saved if title or content is blank")
-        } else {
-            note["content"] = JSON.stringify(note.content)
-            this.props.updateNote(note.title, note.content);
-        }
-    }
-    
-    handleKeyCommand = (command) => {
-        const newState = RichUtils.handleKeyCommand(this.state.editorState, command)
-        if (newState) {
-            this.onChange(newState);
-            return 'handled';
-        }
-        return 'not-handled';
-    }
-
     componentDidMount() {
         this.setState({
             title: "",
@@ -66,6 +40,31 @@ class PostEditor extends Component {
                 title: displayedPost.title,
                 editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(displayedPost.content))),
             });
+        }
+    }
+    
+    focus = () => this.refs.editor.focus();
+
+    onTitleChange = (event) => {
+        event.preventDefault();
+        const value = event.target.value;
+        this.setState({title: value});
+    }
+
+    onEditorChange = (editorState) => {
+        if (editorState.getDecorator() !== null) {
+            this.setState({ editorState });
+        }
+    }
+    
+    submitPost = () => {
+        const contentState = this.state.editorState.getCurrentContent()
+        let note = {title: this.state.title, content: convertToRaw(contentState)}
+        if (this.state.title === "" || (note.content.blocks.length <= 1 && note.content.blocks[0].depth === 0 && note.content.blocks[0].text === "")) {
+            alert("Note cannot be saved if title or content is blank")
+        } else {
+            note["content"] = JSON.stringify(note.content)
+            this.props.updateNote(note.title, note.content);
         }
     }
 
@@ -101,32 +100,33 @@ class PostEditor extends Component {
     };
     
     onUnderlineClick = () => {
-        this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'UNDERLINE'));
+        this.onEditorChange(RichUtils.toggleInlineStyle(this.state.editorState, 'UNDERLINE'));
     }
     
     onBoldClick = () => {
-        this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'))
+        this.onEditorChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'))
     }
     
     onItalicClick = () => {
-        this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'ITALIC'))
-    }
-
-    captureTitle = (event) => {
-        event.preventDefault();
-        let value = event.target.value;
-        this.setState({title: value});
+        this.onEditorChange(RichUtils.toggleInlineStyle(this.state.editorState, 'ITALIC'))
     }
 
     toggleInlineStyle = (style) => {
-        this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, style));
+        this.onEditorChange(RichUtils.toggleInlineStyle(this.state.editorState, style));
     }
 
     toggleBlockType = (blockType) => {
-        this.onChange(RichUtils.toggleBlockType(this.state.editorState, blockType));
+        this.onEditorChange(RichUtils.toggleBlockType(this.state.editorState, blockType));
     };
     
-    focus = () => this.refs.editor.focus();
+    handleKeyCommand = (command) => {
+        const newState = RichUtils.handleKeyCommand(this.state.editorState, command)
+        if (newState) {
+            this.onEditorChange(newState);
+            return 'handled';
+        }
+        return 'not-handled';
+    }
     
     onAddImage = (e) => {
         e.preventDefault();
@@ -141,9 +141,7 @@ class PostEditor extends Component {
         }, () => {setTimeout(() => this.focus(), 0);});
     }
 
-
     render() {
-
         return (
             <div className="editorContainer">
                 <div className="aboveEditor">
@@ -154,11 +152,11 @@ class PostEditor extends Component {
                             name="noteTitle"
                             className="noteTitle"
                             value={this.state.title}
-                            onChange={this.captureTitle}>
+                            onChange={this.onTitleChange}>
                         </input>
                     </span>
                     <span style={{float: 'right'}}>
-                        <Button variant="contained" color="primary" onClick={this.submitEditor}>
+                        <Button variant="contained" color="primary" onClick={this.submitPost}>
                             저장
                         </Button>
                         <Button variant="contained" color="secondary" onClick={this.props.cancel}>
@@ -184,7 +182,7 @@ class PostEditor extends Component {
 
                         editorState={this.state.editorState}
 
-                        onChange= { this.onChange }
+                        onChange= {this.onEditorChange}
                         plugins={this.plugins}
                         handleKeyCommand={this.handleKeyCommand}
                         blockRendererFn={mediaBlockRenderer}

@@ -1,25 +1,23 @@
 import React, { Component } from 'react';
+
 import { PageTitle, PostContent } from 'components/Post';
+
 import { postList } from 'lib/api/post'
-import styled from 'styled-components';
 
-
-const Wrapper = styled.div`
-    padding: 30px 0 30px 0;
-`;
 
 class List extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {itemNum: 3, list: []};
-
-        this.handleDelete = this.handleDelete.bind(this);
-        this.handlePostList = this.handlePostList.bind(this);
-        this.infiniteScroll = this.infiniteScroll.bind(this);
+        this.state = {itemNum: 3, list: []}; // 3: initial number of posts.
     }
 
-    handlePostList = async () => {
+    componentDidMount() {
+        this.getPostList();
+        window.addEventListener('scroll', this.infiniteScroll, true);
+    }
+
+    getPostList = async () => {
         try {
             let itemNum = this.state.itemNum;
             const result = await postList({ itemNum });
@@ -32,12 +30,18 @@ class List extends Component {
         }
     }
 
-    componentDidMount() {
-        this.handlePostList();
-        window.addEventListener('scroll', this.infiniteScroll, true);
+    editPost = (_id) => {
+        const { history } = this.props;
+        history.push('/post/update?'+_id);
     }
 
-    infiniteScroll() {
+    deletePost = () => {
+        const itemNum = this.state.itemNum - 1;
+        this.setState({ itemNum });
+        this.getPostList();
+    }
+
+    infiniteScroll = () => {
 
         const documentElement = document.documentElement;
         const body = document.body;
@@ -47,44 +51,32 @@ class List extends Component {
         const clientHeight = documentElement.clientHeight;
 
         if (scrollHeight === scrollTop + clientHeight) {
-            let { itemNum } = this.state;
-            itemNum += 3;
+            const itemNum = this.state.itemNum + 3;
             this.setState({ itemNum })
-            this.handlePostList();
+            this.getPostList();
         }
-    }
-
-    editPost = (_id) => {
-        const { history } = this.props;
-        history.push('/post/update?'+_id);
-    }
-
-    handleDelete = () => {
-        const itemNum = this.state.itemNum - 1;
-        this.setState({itemNum});
-        this.handlePostList();
     }
 
     render (){
         return (
-            <Wrapper>
+            <div>
                 <PageTitle
-                    title="글 목록"
                     to="/post/write"
+                    title="글 목록"
                     button="글 쓰기"
                 />
-                {this.state.list.map((value, index) => {
+                {this.state.list.map((post, index) => {
                     return (
                         <PostContent
-                            key={index}
-                            value={value}
-                            deletePost={this.handleDelete}
-                            editPost={this.editPost}
+                            key={ index }
+                            post={ post }
+                            editPost={ this.editPost }
+                            deletePost={ this.deletePost }
                         />
-                    )
+                    );
                 })}
-            </Wrapper>
-        )
+            </div>
+        );
     }
 }
 

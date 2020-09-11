@@ -16,6 +16,7 @@ export default () => {
 
         handleKeyCommand: (command, editorState, { setEditorState }) => {
             if (command === "highlight") {
+                console.log(setEditorState);
                 setEditorState(RichUtils.toggleInlineStyle(editorState, "HIGHLIGHT"));
                 return true;
             }
