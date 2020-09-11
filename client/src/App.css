@@ -46,8 +46,6 @@ body {
     box-shadow: 0 0 5px rgba(0,0,0,.1);
 }
 
-
-
 input[type="text"].noteTitle {
     font-size: 17.5px;
     line-height: 20px;
@@ -63,8 +61,6 @@ input[type="text"].noteTitle {
     padding: 0.5em;
     margin-left: 0.6em
 }
-
-
 
 button.submitNote {
     border-radius: 10px;
@@ -109,16 +105,13 @@ button.submitNote {
   color: white;
 }
 
-
 #bold, #italic, #underline {
     width: 30px;
 }
 
-
 .styleButton#bold {
     font-weight: 800;
 }
-
   
 /*                                                  */
 .styleButton, #link_url, .RichEditor-styleButton {
