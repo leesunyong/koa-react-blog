@@ -29,7 +29,7 @@ const BorderedButton = styled(Link)`
 `;
 
 
-class WriteButton extends Component {
+class LinkButton extends Component {
     render() {
         return (
             <BorderedButton to={this.props.to}>
@@ -40,4 +40,4 @@ class WriteButton extends Component {
 }
 
 
-export default WriteButton;
+export default LinkButton;
