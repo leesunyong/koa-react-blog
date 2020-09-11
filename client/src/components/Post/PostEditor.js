@@ -23,7 +23,7 @@ class PostEditor extends Component {
         };
         
         this.plugins = [ highlightPlugin ];
-        this.editorRef = React.createRef();
+        // this.editorRef = React.createRef();
     }
 
     componentDidMount() {
@@ -43,8 +43,6 @@ class PostEditor extends Component {
         }
     }
     
-    focus = () => this.refs.editor.focus();
-
     onTitleChange = (event) => {
         event.preventDefault();
         const value = event.target.value;
@@ -126,7 +124,9 @@ class PostEditor extends Component {
             return 'handled';
         }
         return 'not-handled';
-    }
+    };
+
+    focus = () => this.refs.editor.focus();
     
     onAddImage = (e) => {
         e.preventDefault();
@@ -138,7 +138,9 @@ class PostEditor extends Component {
         const newEditorState = EditorState.set(editorState, {currentContent: contentStateWithEntity}, 'create-entity');
         this.setState({
             editorState: AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' '),
-        }, () => {setTimeout(() => this.focus(), 0);});
+        }, () => {
+            setTimeout(() => this.focus(), 0);
+        });
     }
 
     render() {
@@ -186,7 +188,7 @@ class PostEditor extends Component {
                         plugins={this.plugins}
                         handleKeyCommand={this.handleKeyCommand}
                         blockRendererFn={mediaBlockRenderer}
-                        ref={this.editorRef}
+                        ref="editor"
                     />
                 </div>
             </div>
