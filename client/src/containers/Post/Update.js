@@ -13,7 +13,7 @@ class Update extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: '',
+            _id: '',
             writer: {
                 username: ''
             },
@@ -29,28 +29,28 @@ class Update extends Component {
     }
 
     updateHandle = async () => {
-        const id = this.props.location.search.slice(1);
-        this.setState({id});
 
         try {
-            const result = await getPost({id});
-            const {_id, writer, title, content} = result.data[0];
-            const displayedPost = {title, writer, content};
-            this.setState({_id, displayedPost})
+            const _id = this.props.location.search.slice(1);
+            this.setState({_id});
+            const result = await getPost({_id});
+            const { writer, title, content} = result.data[0];
+            const displayedPost = { title, content };
+            this.setState({_id, writer, displayedPost})
         } catch (e) {
             console.log("알 수 없는 에러가 발생했습니다.");
         }
     }
 
     updateNote = async (title, content) => {
-        const displayedPost = {title, content};
+        const displayedPost = { title, content };
         this.setState({displayedPost});
 
         try {
             const { history } = this.props;
-            const { id, writer } = this.state;
+            const { _id, writer } = this.state;
             
-            await updatePost({ id, writer, title, content });
+            await updatePost({ _id, writer, title, content });
 
             history.push('/post/list');
         } catch (e) {

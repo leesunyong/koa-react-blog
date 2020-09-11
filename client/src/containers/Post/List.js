@@ -12,7 +12,7 @@ class List extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {itemNum: 0, list: []};
+        this.state = {itemNum: 3, list: []};
 
         this.handleDelete = this.handleDelete.bind(this);
         this.handlePostList = this.handlePostList.bind(this);
@@ -47,13 +47,16 @@ class List extends Component {
         const clientHeight = documentElement.clientHeight;
 
         if (scrollHeight === scrollTop + clientHeight) {
+            let { itemNum } = this.state;
+            itemNum += 3;
+            this.setState({ itemNum })
             this.handlePostList();
         }
     }
 
-    editPost = (id) => {
+    editPost = (_id) => {
         const { history } = this.props;
-        history.push('/post/update?'+id);
+        history.push('/post/update?'+_id);
     }
 
     handleDelete = () => {

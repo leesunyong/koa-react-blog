@@ -8,6 +8,7 @@ import { mediaBlockRenderer } from 'components/Post/entities/mediaBlockRenderer'
 import { EditorState, convertFromRaw } from 'draft-js';
 import createHighlightPlugin from './plugins/highlightPlugin'
 
+import { Button } from '@material-ui/core';
 
 const highlightPlugin = createHighlightPlugin();
 
@@ -30,8 +31,9 @@ class PostContent extends Component {
     constructor (props) {
         super(props);
 
+        const { _id, title, writer, writtenAt } = this.props.value;
         this.state = {
-            noteTitle: this.props.value.title,
+            _id, title, writer, writtenAt,
             editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(this.props.value.content))),
         };
 
@@ -39,10 +41,20 @@ class PostContent extends Component {
         this.editorRef = React.createRef();
     }
 
+    componentDidUpdate(prevProps) {
+        const value = this.props.value;
+        if (value !== prevProps.value) {
+            const { _id, title, writer, writtenAt, content } = value;
+            this.setState({ _id, title, writer, writtenAt,
+                editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(content))),
+            });
+        }
+    }
+
     deletePost = async () => {
         try {
-            const id = this.props.value._id;
-            await deletePost({id});
+            const _id = this.state._id;
+            await deletePost({_id});
             this.props.deletePost();
         } catch (e) {
             console.log("알 수 없는 에러 발생");
@@ -63,17 +75,19 @@ class PostContent extends Component {
                 <div className="aboveEditor">
                     <span className="noteTitle">
                         <Title>
-                            {this.state.noteTitle + " ("}
-                            {this.props.value.writer.username + " "}
-                            {this.props.value.writtenAt + ")"}
+                            {this.state.title + " ("}
+                            {this.state.writer.username + " "}
+                            {this.state.writtenAt + ")"}
                         </Title>
                     </span>
-                    <button className="submitNote" onClick={this.deletePost}>
-                        삭제
-                    </button>
-                    <button className="submitNote" onClick={this.editPost} >
-                        수정
-                    </button>
+                    <span style={{float: 'right'}}>
+                        <Button variant="contained" color="primary" onClick={this.editPost}>
+                            수정
+                        </Button>
+                        <Button variant="contained" color="secondary" onClick={this.deletePost}>
+                            삭제
+                        </Button>
+                    </span>
                 </div>
                 
                 <div className="editors">

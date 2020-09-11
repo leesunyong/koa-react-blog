@@ -7,15 +7,18 @@ import { InlineStyles } from 'components/Post'
 
 import { styleMap, getBlockStyle, BlockStyleControls } from "./blockStyles/BlockStyles";
 
+import { Button } from '@material-ui/core';
+
 
 const highlightPlugin = createHighlightPlugin();
+
 
 class PostEditor extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            editorState: EditorState.createEmpty(),
-            noteTitle: ""
+            title: "",
+            editorState: EditorState.createEmpty()
         };
         
         this.plugins = [ highlightPlugin ];
@@ -31,8 +34,8 @@ class PostEditor extends Component {
     
     submitEditor = () => {
         let contentState = this.state.editorState.getCurrentContent()
-        let note = {title: this.state.noteTitle, content: convertToRaw(contentState)}
-        if (this.state.noteTitle === "" || (note.content.blocks.length <= 1 && note.content.blocks[0].depth === 0 && note.content.blocks[0].text === "")) {
+        let note = {title: this.state.title, content: convertToRaw(contentState)}
+        if (this.state.title === "" || (note.content.blocks.length <= 1 && note.content.blocks[0].depth === 0 && note.content.blocks[0].text === "")) {
             alert("Note cannot be saved if title or content is blank")
         } else {
             note["content"] = JSON.stringify(note.content)
@@ -51,7 +54,7 @@ class PostEditor extends Component {
 
     componentDidMount() {
         this.setState({
-            noteTitle: "",
+            title: "",
             editorState: EditorState.createEmpty(this.decorator())
         });
     }
@@ -60,7 +63,7 @@ class PostEditor extends Component {
         const displayedPost = this.props.displayedPost;
         if (displayedPost !== prevProps.displayedPost) {
             this.setState({
-                noteTitle: displayedPost.title,
+                title: displayedPost.title,
                 editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(displayedPost.content))),
             });
         }
@@ -112,7 +115,7 @@ class PostEditor extends Component {
     captureTitle = (event) => {
         event.preventDefault();
         let value = event.target.value;
-        this.setState({noteTitle: value});
+        this.setState({title: value});
     }
 
     toggleInlineStyle = (style) => {
@@ -140,6 +143,7 @@ class PostEditor extends Component {
 
 
     render() {
+
         return (
             <div className="editorContainer">
                 <div className="aboveEditor">
@@ -149,16 +153,18 @@ class PostEditor extends Component {
                             placeholder="제목"
                             name="noteTitle"
                             className="noteTitle"
-                            value={this.state.noteTitle}
+                            value={this.state.title}
                             onChange={this.captureTitle}>
                         </input>
                     </span>
-                    <button className="submitNote" onClick={this.props.cancel}>
-                        취소
-                    </button>
-                    <button className="submitNote" onClick={this.submitEditor}>
-                        저장
-                    </button>
+                    <span style={{float: 'right'}}>
+                        <Button variant="contained" color="primary" onClick={this.submitEditor}>
+                            저장
+                        </Button>
+                        <Button variant="contained" color="secondary" onClick={this.props.cancel}>
+                            취소
+                        </Button>
+                    </span>
                 </div>
                 <div className="tool-bar">
                     <button className="inline styleButton" onClick={this.onAddImage}>

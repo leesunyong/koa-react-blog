@@ -8,7 +8,7 @@ exports.list = async (ctx) => {
     let list = null;
     try {
         list = await Post.getList();
-        list = list.slice(0, num + 3);
+        list = list.slice(0, num);
     } catch (e) {
         ctx.throw(500, e);
     }
