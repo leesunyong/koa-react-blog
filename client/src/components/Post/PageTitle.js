@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+
+import { LinkButton } from 'components/Post'
+
 import styled from 'styled-components';
 import oc from 'open-color';
-import { LinkButton } from 'components/Post'
 
 
 const Title = styled.div`
@@ -13,7 +15,6 @@ const Title = styled.div`
 `;
 
 class PageTitle extends Component {
-    
     render() {
         return (
             <div>
@@ -21,8 +22,9 @@ class PageTitle extends Component {
                 <LinkButton to={this.props.to}>{this.props.button}</LinkButton>
                 {this.props.children}
             </div>
-        )
+        );
     }
 }
+
 
 export default PageTitle;
