@@ -1,4 +1,4 @@
 # js-blog
 
-front-end : react.js
-back-end : node.js & koa
+* front-end : react.js
+* back-end : node.js & koa
